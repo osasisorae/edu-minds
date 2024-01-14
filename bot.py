@@ -5,11 +5,11 @@ import telebot
 import pandas as pd
 import os
 
+import mindsdb_sdk
+server = mindsdb_sdk.connect('http://127.0.0.1:47334')
 
 BOT_TOKEN = config('BOT_TOKEN')
 bot = telebot.TeleBot(BOT_TOKEN)
-
-# brain = Brain()
 
 user_data = {}
 
@@ -76,9 +76,14 @@ def process_subjects_of_interest_step(message):
         user = user_data[chat_id]
         user.subjects_of_interest = message.text
         bot.reply_to(message, 'Thanks. Your profile has been saved.')
-        
+        print(user_data)
+        # # Save data on MindDB 
+
         # Create dataframe from user data
         df = pd.DataFrame([vars(user) for user in user_data.values()])
+        
+        files_db = server.get_database('files')
+        files_db.create_table(f'profile_{str(chat_id)}', df)
         
         # Save to CSV file
         df.to_csv(f'user_data_{chat_id}.csv', index=False)
@@ -92,22 +97,16 @@ def send_learning_path(message):
     try:
         chat_id = message.chat.id
 
-        # Load the CSV file
-        if os.path.exists(f'user_data_{chat_id}.csv'):
-            df = pd.read_csv(f'user_data_{chat_id}.csv')
+        # Load data from minds DB
+        rs = server.get_database('files').query(f'SELECT * FROM profile_{chat_id}')
+        df = pd.DataFrame(rs.fetch())
 
-            # Check the CSV file
-            if not df.empty:
-                # Generate a learning path using LangChain
-                prompt = f"With all the data in this CSV/pandas df, can you create a learning path for this user. The learning path should fit to the users goals which are {df['goals'].iloc[0]} and information on the pandas dataframe. It should have links to resources and a max of 5 resources. The user's subjects of interest are {df['subjects_of_interest'].iloc[0]}."
-                learning_path = Brain().create_learning_path(prompt)
-                
-                # Send the learning path to the user
-                bot.reply_to(message, learning_path)
-            else:
-                bot.reply_to(message, 'No data found in CSV file.')
-        else:
-            bot.reply_to(message, 'No CSV file found.')
+        prompt = f"With all the data in this database, can you create a learning path for this user. The learning path should fit to the users goals which are {df['goals'].iloc[0]} and information on the pandas dataframe. It should have links to resources and a max of 5 resources. The user's subjects of interest are {df['subjects_of_interest'].iloc[0]}."
+        print(prompt)
+        learning_path = Brain().create_learning_path(prompt)
+        
+        # Send the learning path to the user
+        bot.reply_to(message, learning_path)
 
     except Exception as e:
         print(e)
