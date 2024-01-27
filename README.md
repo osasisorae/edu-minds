@@ -31,7 +31,7 @@ Activate the virtual environment.
 Then, use the nohup command to run MindsDB in the background.
 ```
 python3 -m venv .venv
-cd /home/yourusername/edu-minds/.venv
+cd /home/username/edu-minds/.venv
 source bin/activate
 nohup python -m mindsdb > mindsdb.log 2>&1 &
 disown
@@ -43,7 +43,7 @@ Ensure the same virtual environment is activated (if needed for the bot).
 Use nohup to run your bot script in the background.
 ```
 cd /home/username/edu-minds
-nohup /home/osasisorae/edu-minds/.venv/bin/python bot.py > bot.log 2>&1 &
+nohup /home/username/edu-minds/.venv/bin/python bot.py > bot.log 2>&1 &
 disown
 ```
 
