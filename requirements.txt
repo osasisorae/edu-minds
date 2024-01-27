@@ -40,6 +40,7 @@ dill==0.3.6
 distlib==0.3.8
 distro==1.9.0
 dnspython==2.4.2
+docutils==0.20.1
 duckdb==0.9.1
 et-xmlfile==1.1.0
 exceptiongroup==1.2.0
@@ -83,6 +84,8 @@ jsonpath-python==1.0.6
 jsonpointer==2.4
 jsonschema==4.20.0
 jsonschema-specifications==2023.12.1
+Kivy==2.3.0
+Kivy-Garden==0.1.5
 kiwisolver==1.4.5
 kubernetes==29.0.0
 langchain==0.0.347
@@ -147,6 +150,7 @@ pycryptodome==3.20.0
 pydantic==2.5.3
 pydantic_core==2.14.6
 pydateinfer==0.3.0
+Pygments==2.17.2
 pymongo==4.6.1
 pymssql==2.2.11
 pyparsing==3.1.1
