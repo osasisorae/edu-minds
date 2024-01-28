@@ -51,6 +51,8 @@ The > mindsdb.log 2>&1 & and > bot.log 2>&1 & parts of the commands redirect bot
 
 Remember to check these log files for any output or errors from your processes. You can view the contents of these logs at any time with commands like cat mindsdb.log or tail -f mindsdb.log for real-time updates.
 
+**For a full Tutorial check out the [blog](https://oblvck.hashnode.dev/creating-personalized-learning-paths-with-a-chatbot-using-mindsdb-and-telebot) on [Hashnode](http://www.hashnode.com)**
+
 ### Contribution Guidelines
 We welcome contributions from the community to enhance and expand the capabilities of the Educational Assistance Bot. Please refer to our contribution guidelines for details on how to get involved.
 
