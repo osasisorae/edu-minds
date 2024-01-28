@@ -1,7 +1,7 @@
 from decouple import config
 import os
 from crewai import Agent, Task, Crew, Process
-from langchain_community.tools import YouTubeSearchTool
+from langchain_community.tools.youtube.search import YouTubeSearchTool
 
 
 os.environ["OPENAI_API_KEY"] = config("OPENAI_API_KEY")
